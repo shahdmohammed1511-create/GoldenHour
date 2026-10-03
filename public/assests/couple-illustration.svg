@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Fictional illustrated wedding couple</title>
+  <desc id="desc">A decorative, non-photographic illustration of two newlyweds beneath a flowered arch at sunset.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#5a4a50"/>
+      <stop offset=".55" stop-color="#c68d76"/>
+      <stop offset="1" stop-color="#f0cfaa"/>
+    </linearGradient>
+    <linearGradient id="dress" x2="0" y2="1">
+      <stop stop-color="#fff8ea"/>
+      <stop offset="1" stop-color="#d8c4a6"/>
+    </linearGradient>
+    <linearGradient id="suit" x2="0" y2="1">
+      <stop stop-color="#434348"/>
+      <stop offset="1" stop-color="#242831"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#ffeac6" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#ffeac6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#sky)"/>
+  <circle cx="400" cy="330" r="230" fill="url(#glow)"/>
+  <circle cx="400" cy="330" r="125" fill="#ffdfad" opacity=".72"/>
+  <path d="M0 681c194-58 406-30 800-5" fill="none" stroke="#f5d7b4" stroke-opacity=".3" stroke-width="3"/>
+  <path d="M0 660c154-52 261-13 401-39 133-25 267-10 399 24v355H0Z" fill="#70665a"/>
+  <path d="M94 710V398a306 306 0 0 1 612 0v312" fill="none" stroke="#f2e4cb" stroke-width="22"/>
+  <path d="M110 471c77-14 76-107 145-94 53 10 37-84 113-77 70 7 49 67 112 60 68-7 55 84 141 93" fill="none" stroke="#89916d" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#fff4e7">
+    <circle cx="167" cy="417" r="20"/><circle cx="244" cy="367" r="18"/><circle cx="324" cy="324" r="20"/>
+    <circle cx="408" cy="348" r="18"/><circle cx="500" cy="342" r="22"/><circle cx="579" cy="386" r="19"/>
+    <circle cx="648" cy="427" r="18"/>
+  </g>
+  <g fill="#be8080">
+    <circle cx="200" cy="390" r="11"/><circle cx="286" cy="330" r="10"/><circle cx="456" cy="323" r="11"/>
+    <circle cx="544" cy="361" r="10"/><circle cx="617" cy="407" r="10"/>
+  </g>
+  <g fill="none" stroke="#f6ead6" stroke-width="2" opacity=".75">
+    <path d="M130 492c30-17 47-49 52-78m469 81c-28-17-43-45-49-74"/>
+    <path d="M143 455c-17-23-19-45-7-67m480 67c18-22 21-44 9-67"/>
+  </g>
+  <ellipse cx="400" cy="886" rx="230" ry="36" fill="#332d2d" opacity=".3"/>
+  <g>
+    <path d="M267 566c-49 52-69 145-68 320h190c-5-154-24-265-69-320Z" fill="url(#dress)"/>
+    <path d="M271 578c-55 93-72 184-72 308m116-309c43 95 67 199 73 309" fill="none" stroke="#c6ae8b" stroke-width="5" opacity=".75"/>
+    <path d="M277 554c-35 17-51 50-51 94 36 13 70 12 105-1-2-43-18-76-54-93Z" fill="#fff5e6"/>
+    <path d="M247 485c0-59 27-91 67-91s67 32 67 91v80c-38 36-97 31-134-2Z" fill="#493a36"/>
+    <path d="M260 493c0-45 21-75 55-75s55 30 55 75v48c-27 33-82 32-110-1Z" fill="#d9a27f"/>
+    <path d="M254 479c2-57 28-91 68-91 34 0 56 26 59 70-37-7-65-25-83-51-9 34-23 56-44 72Z" fill="#59423a"/>
+    <path d="M283 496h1m55 0h1" stroke="#493630" stroke-linecap="round" stroke-width="6"/>
+    <path d="M297 523c10 9 23 9 33 0" fill="none" stroke="#9a5f56" stroke-linecap="round" stroke-width="4"/>
+    <path d="M245 475c8-69 39-102 82-93 21 4 37 19 46 44-34-17-57-25-79-23-13 34-28 58-49 72Z" fill="#60473e"/>
+    <path d="M250 509c-2 27 4 50 18 69m90-66c0 25-7 46-20 61" fill="none" stroke="#f2d8c6" stroke-width="4"/>
+    <path d="M360 504c25 9 40 23 52 44l-20 12c-14-19-26-29-47-33Z" fill="#d9a27f"/>
+  </g>
+  <g>
+    <path d="M443 585c-41 50-59 145-60 301h198c-5-155-24-251-68-301Z" fill="url(#suit)"/>
+    <path d="m454 568 48 15 48-15-6 107-40 46-42-46Z" fill="#f0e6d7"/>
+    <path d="m461 576 41 39 42-39-14 116-28 31-29-31Z" fill="#383940"/>
+    <path d="M449 485c0-58 24-91 64-91s65 33 65 91v79c-39 35-92 33-129-2Z" fill="#cf9677"/>
+    <path d="M443 477c4-56 28-88 70-88 40 0 63 28 67 79-31-6-57-24-77-54-12 29-31 50-60 63Z" fill="#342d2c"/>
+    <path d="M478 496h1m54 0h1" stroke="#493630" stroke-linecap="round" stroke-width="6"/>
+    <path d="M490 522c9 7 20 7 29 0" fill="none" stroke="#985f54" stroke-linecap="round" stroke-width="4"/>
+    <path d="m489 584 13 18 14-18-14-12Z" fill="#a87870"/>
+    <path d="M502 602v80" stroke="#d3b078" stroke-width="3"/>
+    <path d="M450 502c-21 14-36 30-49 52l19 13c15-19 29-29 47-35Z" fill="#cf9677"/>
+    <path d="M447 581c-15 12-25 27-28 44m-14-17c12 1 24 7 34 18" fill="none" stroke="#cfa764" stroke-linecap="round" stroke-width="4"/>
+  </g>
+  <g fill="#fff2dc" stroke="#c49a67" stroke-width="2">
+    <circle cx="401" cy="631" r="10"/><circle cx="425" cy="648" r="9"/><circle cx="397" cy="665" r="9"/>
+    <circle cx="376" cy="649" r="8"/>
+  </g>
+  <circle cx="400" cy="650" r="5" fill="#c49a67"/>
+  <path d="M370 707c12 21 26 35 44 45m31-50c-8 19-17 32-30 45" fill="none" stroke="#99a080" stroke-linecap="round" stroke-width="5"/>
+  <g fill="#f7e4c7" opacity=".8">
+    <circle cx="127" cy="791" r="4"/><circle cx="671" cy="737" r="5"/><circle cx="616" cy="832" r="3"/>
+    <circle cx="164" cy="866" r="3"/><circle cx="709" cy="891" r="4"/>
+  </g>
+</svg>

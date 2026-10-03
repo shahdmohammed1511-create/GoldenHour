@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en" style="">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <title>Lina &amp; Adam - Wedding Invitation</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@200;300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="/invitation.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #FAF6F0;
+      color: #2C2825;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .texture-paper-card {
+      background-color: #FDFBF7;
+      background-image:
+        radial-gradient(#E8DFC9 0.75px, transparent 0.75px),
+        radial-gradient(#E8DFC9 0.75px, #FDFBF7 0.75px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+
+    .wax-seal {
+      background: radial-gradient(circle at 35% 32%, #fae1a6 0%, #c99f52 48%, #966f28 92%);
+      box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.75),
+        inset -2px -2px 5px rgba(80, 52, 10, 0.5),
+        0 10px 22px rgba(153, 119, 54, 0.4);
+    }
+
+    .envelope-perspective {
+      perspective: 1200px;
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 1.25s cubic-bezier(0.65, 0, 0.35, 1), z-index 0.2s 0.5s;
+    }
+
+    .envelope-card {
+      transition: transform 1.25s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.8s ease;
+    }
+
+    .opened .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .opened .envelope-card {
+      transform: translateY(-240px) scale(1.03);
+      box-shadow: 0 35px 70px rgba(90, 70, 45, 0.28);
+    }
+
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #FAF6F0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #C5A059;
+      border-radius: 4px;
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #B58A38 0%, #D4AF37 50%, #997736 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes softGlow {
+
+      0%,
+      100% {
+        opacity: 0.65;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.95;
+        transform: scale(1.05);
+      }
+    }
+
+    .animate-soft-glow {
+      animation: softGlow 6s ease-in-out infinite;
+    }
+
+    .dearly-credit {
+      display: flex;
+      justify-content: center;
+      padding: 1.1rem 1rem 1.5rem;
+      color: #7E766D;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    .dearly-credit a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      border-radius: 999px;
+      color: inherit;
+      text-decoration: none;
+      transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+    }
+
+    .dearly-credit a:hover,
+    .dearly-credit a:focus-visible {
+      border-color: rgba(197, 160, 89, 0.62);
+      color: #806126;
+      background: rgba(255, 253, 249, 0.7);
+    }
+
+    .dearly-credit strong {
+      color: #997736;
+      font-weight: 500;
+      letter-spacing: 0.17em;
+    }
+
+    .dearly-credit svg {
+      width: 14px;
+      height: 14px;
+      color: #997736;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      ::before,
+      ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-ivory-warm selection:bg-gold/25 selection:text-espresso relative min-h-screen text-charcoal">
+  <canvas id="ambient-canvas"></canvas>
+  <div class="fixed bottom-6 right-6 z-50 flex items-center">
+    <button aria-label="Toggle Ambient Audio"
+      class="w-12 h-12 rounded-full bg-ivory/95 backdrop-blur-md border border-gold/50 text-gold-dark hover:text-espresso hover:border-gold shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-gold"
+      id="musicToggle">
+      <span class="text-base font-serif transition-transform duration-300 group-hover:rotate-12"
+        id="musicIcon">&#9835;</span>
+    </button>
+  </div>
+  <section
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF6F0]/95 backdrop-blur-md px-4 transition-opacity duration-1000"
+    id="envelopeOverlay">
+    <div class="w-full max-w-sm md:max-w-md envelope-perspective flex flex-col items-center">
+      <div class="text-center mb-6 animate-pulse">
+        <p class="text-[11px] uppercase tracking-[0.35em] text-gold-dark font-sans font-medium">A Joyful Invitation For
+          You</p>
+        <h2 class="font-serif italic text-lg text-charcoal mt-1">Lina &amp; Adam</h2>
+      </div>
+      <div aria-label="Open Wedding Invitation" class="relative w-full aspect-[4/3] max-w-[360px] cursor-pointer group"
+        id="envelopeWrapper" role="button">
+        <div class="absolute inset-x-4 bottom-0 h-10 bg-gold-dark/20 filter blur-xl rounded-full"></div>
+        <div class="absolute inset-0 bg-[#F5EFE6] rounded-xl shadow-envelope border border-gold/40 overflow-hidden">
+          <div
+            class="w-full h-full opacity-40 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px]">
+          </div>
+        </div>
+        <div
+          class="envelope-card absolute inset-x-3 bottom-3 top-4 bg-[#FFFDF9] rounded-lg p-5 flex flex-col justify-between items-center text-center shadow-paper border border-gold/35 z-10"
+          id="envelopeCard">
+          <div class="w-full pt-1 border-b border-gold/25 pb-2">
+            <p class="text-[9px] uppercase tracking-[0.35em] text-gold-dark font-sans font-semibold">Wedding Invitation
+            </p>
+          </div>
+          <div class="py-2">
+            <h3 class="font-script text-3xl md:text-4xl text-espresso leading-tight">Lina &amp; Adam</h3>
+            <p class="font-serif italic text-xs text-warmMuted mt-1">15 / 5 / 2027</p>
+            <div class="w-10 h-[1px] bg-gold/50 mx-auto my-2"></div>
+            <p class="text-[9px] text-charcoal uppercase tracking-widest font-sans font-medium">Moonlit Garden Hall &ndash;
+              Willow Grove</p>
+          </div>
+          <div
+            class="w-full border-t border-gold/25 pt-2 flex items-center justify-between text-[8px] text-gold-dark uppercase tracking-widest font-sans">
+            <span>Forever together</span>
+            <span>15 / 5 / 2027</span>
+          </div>
+        </div>
+        <div class="absolute inset-0 z-20 pointer-events-none">
+          <div
+            class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-tr from-[#EFE8DC] to-[#FAF6F0] [clip-path:polygon(0_0,0_100%,100%_100%)] rounded-bl-xl border-l border-b border-gold/25">
+          </div>
+          <div
+            class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-tl from-[#E9E1D3] to-[#FAF6F0] [clip-path:polygon(100%_0,0_100%,100%_100%)] rounded-br-xl border-r border-b border-gold/25">
+          </div>
+          <div
+            class="absolute bottom-0 inset-x-0 h-3/5 bg-gradient-to-t from-[#E4DCCF] via-[#F4EEE4] to-transparent [clip-path:polygon(0_100%,50%_25%,100%_100%)] rounded-b-xl">
+          </div>
+        </div>
+        <div
+          class="envelope-flap absolute top-0 inset-x-0 h-1/2 z-30 [clip-path:polygon(0_0,100%_0,50%_100%)] bg-gradient-to-b from-[#F5EFE6] via-[#EFE7DA] to-[#DFD5C4] border-t border-gold/45 shadow-sm"
+          id="envelopeFlap">
+          <div class="w-full h-full [clip-path:polygon(0_0,100%_0,50%_100%)] bg-white/20"></div>
+        </div>
+        <div
+          class="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 transition-transform duration-500 group-hover:scale-105 active:scale-95"
+          id="waxSeal">
+          <div
+            class="wax-seal w-14 h-14 rounded-full flex flex-col items-center justify-center text-center cursor-pointer shadow-seal">
+            <span class="font-serif italic text-white text-base font-bold tracking-tight drop-shadow-sm">L&amp;A</span>
+            <span class="text-[6px] tracking-widest uppercase text-white/90 font-sans -mt-0.5">2026</span>
+          </div>
+        </div>
+      </div>
+      <button
+        class="mt-8 px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark text-white font-medium text-xs tracking-[0.25em] uppercase shadow-seal hover:brightness-105 active:scale-95 transition-all duration-300 flex items-center space-x-2 focus:ring-2 focus:ring-gold focus:outline-none"
+        id="openInvitationBtn">
+        <span>Open Invitation</span>
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </button>
+      <p class="text-[11px] text-warmMuted mt-4 tracking-wider uppercase font-sans">Tap envelope or button to begin</p>
+    </div>
+  </section>
+  <main class="relative z-10 w-full min-h-screen py-8 md:py-16 px-3 sm:px-6 lg:px-8 flex justify-center"
+    id="mainContent">
+    <article
+      class="relative w-full max-w-xl texture-paper-card rounded-3xl shadow-paper border border-gold/40 overflow-hidden px-5 sm:px-10 py-12 md:py-16 text-center">
+
+      <div class="absolute inset-3 sm:inset-4 border border-gold/30 rounded-2xl pointer-events-none"></div>
+      <div class="absolute top-5 left-5 text-gold/60 text-xs select-none pointer-events-none">&#10020;</div>
+      <div class="absolute top-5 right-5 text-gold/60 text-xs select-none pointer-events-none">&#10020;</div>
+      <div class="absolute bottom-5 left-5 text-gold/60 text-xs select-none pointer-events-none">&#10020;</div>
+      <div class="absolute bottom-5 right-5 text-gold/60 text-xs select-none pointer-events-none">&#10020;</div>
+      <div
+        class="absolute top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-gold-light/20 rounded-full blur-3xl animate-soft-glow pointer-events-none">
+      </div>
+      <div
+        class="absolute bottom-32 left-1/2 -translate-x-1/2 w-80 h-80 bg-amber-100/35 rounded-full blur-3xl pointer-events-none">
+      </div>
+      <header class="relative z-10 mb-8 sm:mb-10">
+        <div
+          class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-gold/60 flex items-center justify-center mx-auto bg-ivory/80 backdrop-blur-sm shadow-sm mb-6">
+          <span class="font-serif italic text-xl sm:text-2xl text-gold-dark font-light tracking-tight">L&amp;A</span>
+        </div>
+        <div
+          class="relative max-w-sm sm:max-w-md mx-auto rounded-t-[140px] rounded-b-3xl border border-gold/45 shadow-envelope overflow-hidden group">
+          <div class="absolute inset-0 z-0">
+            <img alt="Illustrated portrait of Lina and Adam"
+              class="w-full h-full object-cover object-top filter brightness-[0.88] contrast-[1.05] transition-transform duration-1000 group-hover:scale-105"
+              src="/assests/couple-illustration.svg">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-[#2C2825]/60 via-[#2C2825]/30 to-[#2C2825]/75 pointer-events-none">
+            </div>
+            <div
+              class="absolute inset-3 sm:inset-4 border border-gold/40 rounded-t-[130px] rounded-b-2xl pointer-events-none">
+            </div>
+          </div>
+          <div
+            class="relative z-10 px-6 pt-16 pb-12 sm:pt-20 sm:pb-14 flex flex-col items-center justify-between min-h-[480px] sm:min-h-[520px] text-center">
+            <p
+              class="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-white/90 font-sans font-medium drop-shadow-sm mb-2">
+              The Wedding Of</p>
+            <div class="my-auto py-6 space-y-1">
+              <h1 class="font-serif text-3xl sm:text-4xl text-white tracking-wide font-normal drop-shadow-md">Lina
+              </h1>
+              <p class="font-script text-4xl sm:text-5xl text-gold-light leading-none my-1 drop-shadow-md">&amp;</p>
+              <h1 class="font-serif text-3xl sm:text-4xl text-white tracking-wide font-normal drop-shadow-md">Adam
+              </h1>
+            </div>
+            <div class="w-full max-w-xs py-3.5 px-4">
+              <p class="font-serif italic text-xl sm:text-2xl text-gold-light font-normal drop-shadow-md">
+                &ldquo;Forever together&rdquo;</p>
+              <div class="w-12 h-[1px] bg-gold/60 mx-auto my-3"></div>
+              <p class="font-serif text-2xl sm:text-3xl text-white tracking-[0.2em] font-black drop-shadow-lg">15 / 5 / 2027</p>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-14 bg-gradient-to-r from-transparent to-gold/60"></span>
+        <span class="text-gold-dark text-sm">&#10086;</span>
+        <span class="h-[1px] w-14 bg-gradient-to-l from-transparent to-gold/60"></span>
+      </div>
+
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10" id="quranSection">
+        <div class="bg-ivory/95 border border-gold/30 rounded-2xl p-6 sm:p-7 shadow-sm">
+          <div class="flex flex-col items-center space-y-2 select-none mb-4">
+            <p class="font-serif italic text-xs sm:text-sm tracking-wider text-warmMuted/90 font-light text-center leading-relaxed">Kindly Pause The Music Before<br>Reading The Quran Verse</p>
+            <button id="quranPauseBtn" type="button" onclick="document.getElementById('musicToggle')&amp;&amp;document.getElementById('musicToggle').click()" aria-label="Pause Background Music" class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-gold-light/20 via-gold/25 to-gold-dark/20 hover:from-gold-light/35 hover:to-gold-dark/35 border border-gold/50 shadow-sm hover:shadow text-espresso hover:text-gold-deep transition-all duration-300 cursor-pointer active:scale-95 group focus:outline-none">
+              <span class="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center text-[10px] text-gold-dark group-hover:bg-gold/30 transition-colors shadow-inner font-serif">â¸</span>
+              <span class="font-sans text-[10px] tracking-[0.2em] uppercase font-medium text-gold-dark group-hover:text-gold-deep">Pause Audio</span>
+            </button>
+          </div>
+          <p class="font-sans text-xs sm:text-sm text-gold-dark font-medium pt-1 mb-3" lang="ar" dir="rtl">
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </p>
+          <div class="rounded-xl border border-gold/20 bg-[#faf5eb] px-4 py-5 sm:px-6 sm:py-6 select-text">
+          <p class="text-[1.65rem] sm:text-3xl text-[#382d26] font-normal leading-[2.25] sm:leading-[2.35] text-center" dir="rtl" lang="ar" style="font-family: 'Amiri', serif;">
+            وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+            </p>
+          </div>
+          <p class="mt-3 text-center text-xs text-warmMuted" lang="ar" dir="rtl">سورة الروم · الآية ٢١</p>
+        </div>
+      </section>
+
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold/50"></span>
+        <span class="text-gold-dark text-xs">&#10023;</span>
+        <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold/50"></span>
+      </div>
+
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10" id="gratitudeSection">
+        <h2 class="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-gold-dark font-medium mb-3">A NOTE OF GRATITUDE</h2>
+        <div class="bg-ivory/95 border border-gold/30 rounded-2xl p-6 sm:p-7 shadow-sm">
+          <h3 class="font-script text-4xl sm:text-5xl text-espresso font-normal leading-tight mb-4">Dear Family and Friends ...</h3>
+          <div class="space-y-4 pt-1 max-w-md mx-auto">
+            <p class="font-serif italic text-base sm:text-lg text-charcoal/90 leading-relaxed font-light">
+              As we get ready to say &ldquo;I do,&rdquo; we feel grateful for the wonderful people in our lives.
+            </p>
+            <p class="font-serif italic text-base sm:text-lg text-charcoal/90 leading-relaxed font-light">
+              Your support means the world to us, and we would be honored to have you with us as we begin our new life together.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-14 bg-gradient-to-r from-transparent to-gold/60"></span>
+        <span class="text-gold-dark text-sm">&#10086;</span>
+        <span class="h-[1px] w-14 bg-gradient-to-l from-transparent to-gold/60"></span>
+      </div>
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10">
+        <h2 class="font-serif uppercase tracking-[0.25em] text-lg sm:text-xl text-espresso mb-4 font-normal">Countdown
+        </h2>
+        <div class="bg-ivory/95 border border-gold/35 rounded-2xl p-5 sm:p-6 shadow-sm backdrop-blur-sm">
+          <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
+            <div class="bg-white/90 border border-gold/30 rounded-xl p-2.5 sm:p-3 shadow-sm">
+              <span class="font-serif text-2xl sm:text-3xl text-espresso font-medium block leading-none"
+                id="timerDays">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-warmMuted font-sans mt-1.5 block">Days</span>
+            </div>
+            <div class="bg-white/90 border border-gold/30 rounded-xl p-2.5 sm:p-3 shadow-sm">
+              <span class="font-serif text-2xl sm:text-3xl text-espresso font-medium block leading-none"
+                id="timerHours">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-warmMuted font-sans mt-1.5 block">Hours</span>
+            </div>
+            <div class="bg-white/90 border border-gold/30 rounded-xl p-2.5 sm:p-3 shadow-sm">
+              <span class="font-serif text-2xl sm:text-3xl text-espresso font-medium block leading-none"
+                id="timerMinutes">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-warmMuted font-sans mt-1.5 block">Mins</span>
+            </div>
+            <div class="bg-white/90 border border-gold/30 rounded-xl p-2.5 sm:p-3 shadow-sm">
+              <span class="font-serif text-2xl sm:text-3xl text-gold-dark font-medium block leading-none"
+                id="timerSeconds">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-warmMuted font-sans mt-1.5 block">Secs</span>
+            </div>
+          </div>
+          <p class="text-center text-xs text-gold-dark mt-3 italic font-serif hidden" id="timerMessage">The celebration
+            is today!</p>
+        </div>
+      </section>
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold/50"></span>
+        <span class="text-gold-dark text-xs">&#10023;</span>
+        <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold/50"></span>
+      </div>
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10">
+        <h2 class="font-serif text-2xl sm:text-3xl text-espresso font-normal mb-3">Welcome!</h2>
+        <div class="bg-ivory/95 border border-gold/30 rounded-2xl p-6 sm:p-7 shadow-sm">
+          <p class="font-serif italic text-base sm:text-lg text-charcoal leading-relaxed">&ldquo;From the very first
+            moment, we knew our story was meant to be celebrated. We would be honoured to have you with us as we begin
+            this new chapter &mdash; surrounded by the people we love most.&rdquo;</p>
+        </div>
+      </section>
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold/50"></span>
+        <span class="text-gold-dark text-sm">&#10086;</span>
+        <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold/50"></span>
+      </div>
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10">
+        <h2 class="font-serif text-2xl sm:text-3xl text-espresso font-normal mb-3">When &amp; Where</h2>
+        <div class="bg-ivory/95 border border-gold/35 rounded-2xl p-6 sm:p-7 shadow-sm">
+          <div class="mb-4">
+            <p class="text-[11px] uppercase tracking-[0.25em] text-gold-dark font-sans font-semibold mb-1">Date &amp; Time</p>
+            <p class="font-serif text-2xl text-espresso font-medium">15 / 5 / 2027</p>
+            <p class="font-serif italic text-sm text-warmMuted mt-0.5">Saturday &bull; 7:00 PM</p>
+          </div>
+          <div class="w-12 h-[1px] bg-gold/30 mx-auto my-4"></div>
+          <div class="mb-6">
+            <p class="text-[11px] uppercase tracking-[0.25em] text-gold-dark font-sans font-semibold mb-3">Venue</p>
+            
+            <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden shadow-sm border border-gold/30 bg-[#FFFDF9] p-1.5 group mb-4">
+              <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
+                <img alt="Moonlit Garden Hall Willow Grove Venue" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" src="assests/venue.svg">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#2C2825]/40 via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute bottom-3 inset-x-0 text-center">
+                  <span class="text-xs text-white/95 font-serif italic tracking-wider drop-shadow-sm">Willow Grove Celebration Hall</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="font-serif text-xl sm:text-2xl text-espresso font-normal leading-snug">Moonlit Garden Hall</p>
+            <p class="font-serif italic text-base sm:text-lg text-charcoal/80 mt-1">Willow Grove</p>
+          </div>
+          <div class="pt-1">
+            <a class="inline-flex items-center justify-center space-x-2 px-7 py-3 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark text-white hover:brightness-105 shadow-seal transition-all duration-300 font-sans text-xs uppercase tracking-[0.2em] font-medium group"
+              href="https://maps.google.com/?q=Moonlit+Garden+Hall+Willow+Grove" id="googleMapsBtn" rel="noopener noreferrer"
+              target="_blank">
+              <span>View Location</span>
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold/50"></span>
+        <span class="text-gold-dark text-xs">&#10023;</span>
+        <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold/50"></span>
+      </div>
+      <section class="relative z-10 max-w-md mx-auto mb-8 sm:mb-10">
+        <h2 class="font-serif text-2xl sm:text-3xl text-espresso font-normal mb-3">Gifts</h2>
+        <div class="bg-ivory/95 border border-gold/30 rounded-2xl p-6 shadow-sm">
+          <p class="font-sans text-xs sm:text-sm uppercase tracking-[0.18em] text-charcoal font-medium leading-relaxed">
+            YOUR PRESENCE IS THE GREATEST GIFT WE COULD RECEIVE.</p>
+        </div>
+      </section>
+      <div class="relative z-10 flex items-center justify-center space-x-3 my-7 sm:my-9">
+        <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-gold/50"></span>
+        <span class="text-gold-dark text-sm">&#10086;</span>
+        <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-gold/50"></span>
+      </div>
+      <section class="relative z-10 max-w-md mx-auto mb-4 text-left">
+        <div class="text-center mb-5">
+          <h2 class="font-serif text-2xl sm:text-3xl text-espresso font-normal">Leave A Message</h2>
+          <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-gold-dark font-sans font-medium mt-1.5">
+            SHARE YOUR LOVE, WISHES, OR A NOTE FOR THE HAPPY COUPLE!</p>
+        </div>
+        <p class="mb-4 rounded-xl border border-gold/30 bg-gold/10 p-3 text-center text-xs font-serif italic text-charcoal" role="status">
+          RSVP and guest messages are not being collected on this demo invitation yet.
+        </p>
+        <form class="bg-ivory/95 border border-gold/35 rounded-2xl p-6 sm:p-7 shadow-sm space-y-5" id="guestbookForm">
+          <div>
+            <label class="block text-[10px] font-sans uppercase tracking-[0.2em] text-gold-dark font-semibold mb-1.5"
+              for="guestName">YOUR NAME *</label>
+            <input
+              class="w-full bg-white/90 border border-gold/35 rounded-xl px-4 py-2.5 text-sm text-espresso placeholder:text-warmMuted/60 focus:outline-none focus:ring-1 focus:ring-gold focus:border-gold transition-colors"
+              id="guestName" name="guestName" placeholder="Enter your name" required="" type="text" disabled>
+          </div>
+          <div>
+            <label class="block text-[10px] font-sans uppercase tracking-[0.2em] text-gold-dark font-semibold mb-1.5"
+              for="guestMessage">WRITE YOUR CONGRATULATION *</label>
+            <textarea
+              class="w-full bg-white/90 border border-gold/35 rounded-xl px-4 py-2.5 text-sm text-espresso placeholder:text-warmMuted/60 focus:outline-none focus:ring-1 focus:ring-gold focus:border-gold transition-colors resize-none"
+              id="guestMessage" name="guestMessage" placeholder="Your answer" required="" rows="3" disabled></textarea>
+          </div>
+          <div>
+            <label class="block text-[10px] font-sans uppercase tracking-[0.2em] text-gold-dark font-semibold mb-2">WILL
+              YOU BE ATTENDING? *</label>
+            <div class="grid grid-cols-1 gap-2.5">
+              <label
+                class="flex items-center space-x-3 p-3 rounded-xl border border-gold/30 bg-white/70 hover:bg-white cursor-pointer transition-colors">
+                <input checked="" class="text-gold focus:ring-gold border-gold/40 text-gold-dark" name="attending"
+                  type="radio" value="yes" disabled>
+                <span class="text-xs sm:text-sm font-serif text-espresso">Joyfully Accepts / Yes, I will attend</span>
+              </label>
+              <label
+                class="flex items-center space-x-3 p-3 rounded-xl border border-gold/30 bg-white/70 hover:bg-white cursor-pointer transition-colors">
+                <input class="text-gold focus:ring-gold border-gold/40 text-gold-dark" name="attending" type="radio"
+                  value="no" disabled>
+                <span class="text-xs sm:text-sm font-serif text-espresso">Regretfully Declines / Sorry, I cannot make
+                  it</span>
+              </label>
+            </div>
+          </div>
+          <div class="pt-2 text-center">
+            <button
+              class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark text-white font-medium text-xs tracking-[0.2em] uppercase shadow-seal hover:brightness-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold"
+              id="guestbookSubmitBtn" type="button" disabled>
+              RSVP Not Active Yet
+            </button>
+          </div>
+        </form>
+      </section>
+    </article>
+  </main>
+  <footer class="dearly-credit">
+    <a href="https://www.instagram.com/dearly_digitalstudio?stkn=MWplc2Vydmt3dmcyeg%3D%3D&amp;utm_source=qr"
+      target="_blank" rel="noopener noreferrer" aria-label="Created by Dearly. Visit Dearly on Instagram">
+      <span>Created by</span>
+      <strong>DEARLY</strong>
+      <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="17.5" cy="6.7" r="1" fill="currentColor"/>
+      </svg>
+    </a>
+  </footer>
+
+  <script>
+    window.weddingConfig = __WEDDING_CONFIG__;
+
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    const openInvitationBtn = document.getElementById('openInvitationBtn');
+    const envelopeOverlay = document.getElementById('envelopeOverlay');
+    let isEnvelopeOpened = false;
+
+    function openEnvelope() {
+      if (isEnvelopeOpened) return;
+      isEnvelopeOpened = true;
+      envelopeWrapper.classList.add('opened');
+      playChimeTone();
+      
+      // Auto-play music on first user gesture
+      if (typeof bgAudio !== 'undefined') {
+        bgAudio.play().then(() => {
+          isPlayingAmbient = true;
+          musicIcon.innerText = '\u23F8';
+          musicBtn.classList.add('border-gold', 'text-gold-dark', 'animate-pulse');
+        }).catch((err) => console.log("Audio play blocked:", err));
+      }
+
+      setTimeout(() => {
+        envelopeOverlay.style.opacity = '0';
+        envelopeOverlay.style.pointerEvents = 'none';
+        setTimeout(() => { envelopeOverlay.classList.add('hidden'); }, 1000);
+      }, 1400);
+    }
+
+    envelopeWrapper.addEventListener('click', openEnvelope);
+    envelopeOverlay.addEventListener('click', openEnvelope);
+    openInvitationBtn.addEventListener('click', (e) => { e.stopPropagation(); openEnvelope(); });
+
+    function updateCountdown() {
+      const target = new Date(window.weddingConfig.targetDateTime).getTime();
+      const now = new Date().getTime();
+      const difference = target - now;
+      const daysEl = document.getElementById('timerDays');
+      const hoursEl = document.getElementById('timerHours');
+      const minutesEl = document.getElementById('timerMinutes');
+      const secondsEl = document.getElementById('timerSeconds');
+      const messageEl = document.getElementById('timerMessage');
+      if (difference <= 0) {
+        if (daysEl) daysEl.innerText = '00';
+        if (hoursEl) hoursEl.innerText = '00';
+        if (minutesEl) minutesEl.innerText = '00';
+        if (secondsEl) secondsEl.innerText = '00';
+        if (messageEl) messageEl.classList.remove('hidden');
+        return;
+      }
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      if (daysEl) daysEl.innerText = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.innerText = String(hours).padStart(2, '0');
+      if (minutesEl) minutesEl.innerText = String(minutes).padStart(2, '0');
+      if (secondsEl) secondsEl.innerText = String(seconds).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // â”€â”€ Real MP3 audio â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const bgAudio = new Audio(window.weddingConfig.audioUrl);
+    bgAudio.loop = true;
+    bgAudio.volume = 0.5;
+    let isPlayingAmbient = false;
+
+    // Keep a tiny AudioContext only for the envelope chime
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+    }
+
+    function playChimeTone() {
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.0001, now + idx * 0.12);
+          gain.gain.linearRampToValueAtTime(0.05, now + idx * 0.12 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 1.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 1.3);
+        });
+      } catch (e) { }
+    }
+
+    const musicBtn = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    musicBtn.addEventListener('click', () => {
+      if (!isPlayingAmbient) {
+        bgAudio.play().then(() => {
+          isPlayingAmbient = true;
+          musicIcon.innerText = '\u23F8';
+          musicBtn.classList.add('border-gold', 'text-gold-dark', 'animate-pulse');
+        }).catch(() => { });
+      } else {
+        bgAudio.pause();
+        isPlayingAmbient = false;
+        musicIcon.innerText = '\u266B';
+        musicBtn.classList.remove('animate-pulse');
+      }
+    });
+
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class AmbientParticle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height - 20;
+        this.size = Math.random() * 2 + 0.8;
+        this.speedY = Math.random() * 0.35 + 0.15;
+        this.speedX = (Math.random() - 0.5) * 0.25;
+        this.opacity = Math.random() * 0.45 + 0.15;
+        this.angle = Math.random() * Math.PI * 2;
+        this.angularSpeed = (Math.random() - 0.5) * 0.02;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.angle) * 0.18;
+        this.angle += this.angularSpeed;
+        if (this.y > height + 20) { this.reset(); this.y = -10; }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(197, 160, 89, ' + this.opacity + ')';
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = '#D4AF37';
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const count = window.innerWidth < 768 ? 20 : 35;
+    for (let i = 0; i < count; i++) { particles.push(new AmbientParticle()); }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (let p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animateParticles);
+    }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { animateParticles(); }
+  </script>
+</body>
+
+</html>
