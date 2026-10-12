@@ -349,8 +349,12 @@ button {
 }
 
 .guest-message-heart {
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
   color: var(--guestbook-gold);
-  font-size: 13px;
+  fill: currentColor;
 }
 
 .guestbook-footer {
